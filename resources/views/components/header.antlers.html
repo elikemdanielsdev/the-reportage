@@ -1,0 +1,15 @@
+{{ partial:components/section tag="header" }}
+  {{ partial:components/container class="flex justify-between items-center" }}
+    <h1 class="text-2xl font-bold">{{ site:name }}</h1>
+    {{ if nav:header }}
+      <nav>
+        <ul class="flex gap-4">
+          {{ nav:header }}
+            <li><a wire:navigate class="{{ is_current ? 'font-bold underline' : '' }}"
+                href="{{ url }}">{{ title }}</a></li>
+          {{ /nav:header }}
+        </ul>
+      </nav>
+    {{ /if }}
+  {{ /partial:components/container }}
+{{ /partial:components/section }}

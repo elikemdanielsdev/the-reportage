@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="{{ site:short_locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title ?? site:name }}</title>
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    {{ livewire:styles }}
+    {{ vite src="resources/js/site.js|resources/css/site.css" }}
+</head>
+<body class="font-inter text-gray-900 min-h-screen flex flex-col antialiased">
+    {{ partial:components/header class="bg-yellow-200" }}
+    <main class="flex-grow">{{ template_content }}</main>
+    {{ partial:components/footer class="bg-yellow-200" }}
+    {{ livewire:scripts }}
+</body>
+</html>

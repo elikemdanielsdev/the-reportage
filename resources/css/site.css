@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@source "../views";
+@source "../../content";
+
+
+/* CSS */
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings: "liga" 1, "calt" 1, "cv01", "cv03", "cv04", "cv05",
+    "cv06", "cv09", "cv11", "cv12", "cv13";
+  /* fix for Chrome */
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}
