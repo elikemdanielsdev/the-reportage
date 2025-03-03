@@ -10,8 +10,8 @@
     {{ livewire:styles }}
     {{ vite src="resources/js/site.js|resources/css/site.css" }}
 </head>
-<body class="font-inter text-gray-900 min-h-screen flex flex-col antialiased">
-    {{ partial:components/header class="bg-yellow-200" }}
+<body class="font-inter text-zinc-900 bg-zinc-50 min-h-screen flex flex-col antialiased">
+    {{ partial:components/header }}
     <main class="flex-grow">{{ template_content }}</main>
     {{ partial:components/footer class="bg-yellow-200" }}
     {{ livewire:scripts }}

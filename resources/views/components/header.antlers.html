@@ -1,15 +1,51 @@
-{{ partial:components/section tag="header" }}
-  {{ partial:components/container class="flex justify-between items-center" }}
-    <h1 class="text-2xl font-bold">{{ site:name }}</h1>
-    {{ if nav:header }}
-      <nav>
-        <ul class="flex gap-4">
-          {{ nav:header }}
-            <li><a wire:navigate class="{{ is_current ? 'font-bold underline' : '' }}"
-                href="{{ url }}">{{ title }}</a></li>
-          {{ /nav:header }}
-        </ul>
-      </nav>
-    {{ /if }}
-  {{ /partial:components/container }}
-{{ /partial:components/section }}
+<header x-data="{ showThird: false }" x-init="
+  window.addEventListener('scroll', () => {
+    let first = $refs.first.getBoundingClientRect().bottom;
+    let second = $refs.second.getBoundingClientRect().bottom;
+    showThird = first < 0 && second < 0;
+  });
+">
+  <!-- First Section -->
+  <div x-ref="first" class="first" role="banner">
+    {{ partial:components/section class="bg-gold py-10 border-b border-zinc-900/15" }}
+      {{ partial:components/container }}
+        Reportage
+      {{ /partial:components/container }}
+    {{ /partial:components/section }}
+  </div>
+
+  <!-- Second Section -->
+  <div x-ref="second" class="second">
+    {{ partial:components/section tag="header" class="bg-gold py-4" }}
+      {{ partial:components/container class="flex justify-between items-center" }}
+        <nav aria-label="Primary Navigation">
+          <ul class="flex gap-8">
+            {{ taxonomy:categories }}
+              <li>
+                <a wire:navigate class="{{ is_current ? 'font-bold underline' : '' }}" href="{{ url }}">
+                  {{ title }}
+                </a>
+              </li>
+            {{ /taxonomy:categories }}
+          </ul>
+        </nav>
+        <button aria-label="Search">
+          <x-lucide-search class="h-6" />
+        </button>
+      {{ /partial:components/container }}
+    {{ /partial:components/section }}
+  </div>
+
+  <!-- Third (Sticky Header) -->
+  <div x-cloak class="third fixed top-0 left-0 w-full bg-gold transition-opacity duration-300" x-show="showThird"
+    x-transition.opacity x-bind:aria-hidden="!showThird" role="banner">
+    {{ partial:components/section tag="header" }}
+      {{ partial:components/container class="flex justify-between items-center" }}
+        Reportage
+        <button aria-label="Search">
+          <x-lucide-search class="h-6" />
+        </button>
+      {{ /partial:components/container }}
+    {{ /partial:components/section }}
+  </div>
+</header>
