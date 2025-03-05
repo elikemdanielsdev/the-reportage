@@ -1,0 +1,60 @@
+{{ partial:components/section class="py-12" }}
+    {{ partial:components/container class="grid sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-12 gap-6 sm:gap-4 lg:gap-12 items-start" }}
+        {{ collection:articles as="articles" }}
+            {{ articles limit="1" }}
+                <article class="md:col-span-3 lg:col-span-8 flex flex-col gap-5 relative">
+                    <span class="absolute px-2.5 py-1.5 bg-zinc-50 text-xs font-bold uppercase">Featured</span>
+                    <img src="{{ glide:image w="1000" h="580" }}" alt="{{ title }}"
+                        class="w-full aspect-video object-cover">
+                    <div class="flex flex-col gap-2.5">
+                        <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                        <h3 class="text-[38px] font-bold leading-[1.3]">
+                            <a href="{{ url }}">{{ title }}</a>
+                        </h3>
+                    </div>
+                </article>
+            {{ /articles }}
+            {{ if no_results }}
+                <div class="w-full">
+                    <p class="text-gray-500">No articles available at the moment.</p>
+                </div>
+            {{ /if }}
+        {{ /collection:articles }}
+
+        <div class="md:col-span-2 lg:col-span-4 grid items-start">
+            {{ collection:articles as="articles" limit="3" taxonomy:categories="travel" sort="random" }}
+                {{ articles }}
+                    {{ if index == 0 }}
+                        <article class="flex flex-col gap-5 pb-6 relative">
+                            <img src="{{ glide:image w="1000" h="580" }}" alt="{{ title }}"
+                                class="w-full aspect-video object-cover">
+                            <div class="flex flex-col gap-2.5">
+                                <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                                <h3 class="text-[24px] font-bold leading-[1.3]">{{ title }}</h3>
+                            </div>
+                            <span class="absolute px-2.5 py-1.5 bg-zinc-50 text-xs font-bold uppercase">Trending</span>
+                        </article>
+                    {{ else }}
+                        <article
+                            class="grid grid-cols-5 gap-6 py-6 last:pb-0 last:border-b-0 border-t border-zinc-900/15">
+                            <div class="col-span-3 flex flex-col gap-2.5">
+                                <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                                <h3 class="text-[18px] font-bold leading-[1.3] line-clamp-3">{{ title }}</h3>
+                                {{ categories }}
+                                    {{ title }}
+                                {{ /categories }}
+                            </div>
+                            <img src="{{ glide:image w="1000" h="580" }}" alt="{{ title }}"
+                                class="w-full aspect-[4/3.75] object-cover col-span-2">
+                        </article>
+                    {{ /if }}
+                {{ /articles }}
+                {{ if no_results }}
+                    <div class="w-full">
+                        <p class="text-gray-500">No articles available at the moment.</p>
+                    </div>
+                {{ /if }}
+            {{ /collection:articles }}
+        </div>
+    {{ /partial:components/container }}
+{{ /partial:components/section }}
