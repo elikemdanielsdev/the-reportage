@@ -1,10 +1,10 @@
-<header x-data="{ showThird: false }" x-init="
+<header x-data="{ showThird: false, currentUrl: window.location.pathname }" x-init="
   window.addEventListener('scroll', () => {
     let first = $refs.first.getBoundingClientRect().bottom;
     let second = $refs.second.getBoundingClientRect().bottom;
     showThird = first < 0 && second < 0;
   });
-">
+" class="z-10">
   <!-- First Section -->
   <section x-ref="first" class="first bg-gold py-10 border-b border-zinc-900/15" role="banner">
     <div class="inner-container">
@@ -50,13 +50,14 @@
   </section>
 
   <!-- Second Section -->
-  <section x-ref="second" class="second bg-gold py-4">
+  <section x-ref="second" class="second bg-gold">
     <div class="inner-container flex justify-between items-center">
       <nav aria-label="Primary Navigation">
         <ul class="flex gap-8">
           {{ taxonomy:categories }}
             <li>
-              <a wire:navigate class="{{ is_current ? 'font-bold underline' : '' }}" href="{{ url }}">
+              <a wire:navigate href="{{ url }}" class="block py-3 font-semibold"
+                :class="currentUrl === '{{ url }}' ? 'border-b-2 border-zinc-950' : ''">
                 {{ title }}
               </a>
             </li>

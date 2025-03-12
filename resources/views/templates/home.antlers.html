@@ -1,15 +1,23 @@
-{{ partial:components/section class="py-12" }}
-    {{ partial:components/container class="grid sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-12 gap-6 sm:gap-4 lg:gap-12 items-start" }}
+{{ partial:components/section class="pt-12 pb-24" }}
+    {{ partial:components/container class="grid sm:grid-cols-1 md:grid-cols-5 lg:grid-cols-12 gap-12 items-start" }}
         {{ collection:articles as="articles" }}
             {{ articles limit="1" }}
                 <article class="md:col-span-3 lg:col-span-8 flex flex-col gap-5 relative">
                     <span class="absolute px-2.5 py-1.5 bg-zinc-50 text-xs font-bold uppercase">Featured</span>
-                    <img src="{{ glide:image w="1000" h="580" }}" alt="{{ title }}"
+                    <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
                         class="w-full aspect-video object-cover">
                     <div class="flex flex-col gap-2.5">
-                        <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                        <div class="uppercase text-xs flex gap-2">
+                            {{ categories }}
+                                <span>
+                                    {{ title }}
+                                </span>
+                            {{ /categories }}
+                            <span>•</span>
+                            <time datetime="{{ date }}">{{ date }}</time>
+                        </div>
                         <h3 class="text-[38px] font-bold leading-[1.3]">
-                            <a href="{{ url }}">{{ title }}</a>
+                            <a wire:navigate href="{{ url }}">{{ title }}</a>
                         </h3>
                     </div>
                 </article>
@@ -22,15 +30,15 @@
         {{ /collection:articles }}
 
         <div class="md:col-span-2 lg:col-span-4 grid items-start">
-            {{ collection:articles as="articles" limit="3" taxonomy:categories="travel" sort="random" }}
+            {{ collection:articles as="articles" limit="3" taxonomy:categories="travel" }}
                 {{ articles }}
                     {{ if index == 0 }}
                         <article class="flex flex-col gap-5 pb-6 relative">
-                            <img src="{{ glide:image w="1000" h="580" }}" alt="{{ title }}"
-                                class="w-full aspect-video object-cover">
+                            <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                                class="w-full md:aspect-video object-cover">
                             <div class="flex flex-col gap-2.5">
                                 <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
-                                <h3 class="text-[24px] font-bold leading-[1.3]">{{ title }}</h3>
+                                <h3 class="text-[30px] font-bold leading-[1.3]">{{ title }}</h3>
                             </div>
                             <span class="absolute px-2.5 py-1.5 bg-zinc-50 text-xs font-bold uppercase">Trending</span>
                         </article>
@@ -44,7 +52,7 @@
                                     {{ title }}
                                 {{ /categories }}
                             </div>
-                            <img src="{{ glide:image w="1000" h="580" }}" alt="{{ title }}"
+                            <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
                                 class="w-full aspect-[4/3.75] object-cover col-span-2">
                         </article>
                     {{ /if }}
@@ -56,5 +64,217 @@
                 {{ /if }}
             {{ /collection:articles }}
         </div>
+    {{ /partial:components/container }}
+{{ /partial:components/section }}
+
+{{ partial:components/section class="py-24 bg-zinc-900 text-zinc-50" }}
+    {{ partial:components/container class="mb-10" }}
+        <div>
+            <h2 class="text-[56px] font-bold">Travel</h2>
+        </div>
+    {{ /partial:components/container }}
+    {{ partial:components/container class="grid sm:grid-cols-1 md:grid-cols-4 gap-8 items-start" }}
+        {{ collection:articles as="articles" taxonomy:categories="travel" }}
+            {{ articles limit="3" }}
+                {{ if index == 0 }}
+                    <article class="flex flex-col gap-5 md:col-span-2">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-[4/3] object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[30px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ elseif index == 1 }}
+                    <article class="flex flex-col gap-5 md:col-span-1">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-square object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[18px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ else }}
+                    <article class="flex flex-col gap-5 md:col-span-1">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-[3/4] object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[18px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ /if }}
+            {{ /articles }}
+            {{ if no_results }}
+                <div class="w-full">
+                    <p class="text-gray-500">No articles available at the moment.</p>
+                </div>
+            {{ /if }}
+        {{ /collection:articles }}
+    {{ /partial:components/container }}
+{{ /partial:components/section }}
+
+{{ partial:components/section class="py-24" }}
+    {{ partial:components/container class="mb-10" }}
+        <div>
+            <h2 class="text-[56px] font-bold">Travel</h2>
+        </div>
+    {{ /partial:components/container }}
+    {{ partial:components/container class="grid sm:grid-cols-1 md:grid-cols-4 gap-8 items-start" }}
+        {{ collection:articles as="articles" taxonomy:categories="travel" }}
+            {{ articles limit="3" }}
+                {{ if index == 0 }}
+                    <article class="flex flex-col gap-5 md:col-span-2">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-[4/3] object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[30px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ elseif index == 1 }}
+                    <article class="flex flex-col gap-5 md:col-span-1">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-square object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[18px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ else }}
+                    <article class="flex flex-col gap-5 md:col-span-1">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-[3/4] object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[18px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ /if }}
+            {{ /articles }}
+            {{ if no_results }}
+                <div class="w-full">
+                    <p class="text-gray-500">No articles available at the moment.</p>
+                </div>
+            {{ /if }}
+        {{ /collection:articles }}
+    {{ /partial:components/container }}
+{{ /partial:components/section }}
+
+{{ partial:components/section class="py-24 border-t border-zinc-900/15" }}
+    {{ partial:components/container class="mb-10" }}
+        <div>
+            <h2 class="text-[56px] font-bold">Health</h2>
+        </div>
+    {{ /partial:components/container }}
+    {{ partial:components/container class="grid sm:grid-cols-1 md:grid-cols-4 gap-8 items-start" }}
+        {{ collection:articles as="articles" taxonomy:categories="travel" }}
+            {{ articles limit="3" }}
+                {{ if index == 0 }}
+                    <article class="flex flex-col gap-5 md:col-span-2">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-[4/3] object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[30px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ elseif index == 1 }}
+                    <article class="flex flex-col gap-5 md:col-span-1">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-square object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[18px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ else }}
+                    <article class="flex flex-col gap-5 md:col-span-1">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-[3/4] object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[18px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ /if }}
+            {{ /articles }}
+            {{ if no_results }}
+                <div class="w-full">
+                    <p class="text-gray-500">No articles available at the moment.</p>
+                </div>
+            {{ /if }}
+        {{ /collection:articles }}
+    {{ /partial:components/container }}
+{{ /partial:components/section }}
+
+{{ partial:components/section class="py-24 border-t border-zinc-900/15" }}
+    {{ partial:components/container class="mb-10" }}
+        <div>
+            <h2 class="text-[56px] font-bold">Politics</h2>
+        </div>
+    {{ /partial:components/container }}
+    {{ partial:components/container class="grid sm:grid-cols-1 md:grid-cols-4 gap-8 items-start" }}
+        {{ collection:articles as="articles" taxonomy:categories="travel" }}
+            {{ articles limit="3" }}
+                {{ if index == 0 }}
+                    <article class="flex flex-col gap-5 md:col-span-2">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-[4/3] object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[30px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ elseif index == 1 }}
+                    <article class="flex flex-col gap-5 md:col-span-1">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-square object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[18px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ else }}
+                    <article class="flex flex-col gap-5 md:col-span-1">
+                        <img src="{{ glide:image width="1000" height="580" }}" alt="{{ title }}"
+                            class="w-full sm:aspect-video md:aspect-[3/4] object-cover">
+                        <div class="flex flex-col gap-2.5">
+                            <time datetime="{{ date }}" class="uppercase text-xs">{{ date }}</time>
+                            <h3 class="text-[18px] font-bold leading-[1.3]">
+                                <a href="{{ url }}">{{ title }}</a>
+                            </h3>
+                        </div>
+                    </article>
+                {{ /if }}
+            {{ /articles }}
+            {{ if no_results }}
+                <div class="w-full">
+                    <p class="text-gray-500">No articles available at the moment.</p>
+                </div>
+            {{ /if }}
+        {{ /collection:articles }}
     {{ /partial:components/container }}
 {{ /partial:components/section }}
